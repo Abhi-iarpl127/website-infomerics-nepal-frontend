@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 // import RegulatoryDisclosersDescriptionUI from "../../../RegulatoryDisclosersDescriptionUI";
 import { getPageData, getRegulatoryDisclosersListingDetailData1 } from "@/services/APIServices";
 import { notFound } from "next/navigation";
@@ -29,7 +29,7 @@ import { ResponseData } from "@/types/common";
     return;
   }
   
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   
 
   if (!data) {

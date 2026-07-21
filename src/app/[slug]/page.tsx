@@ -1,4 +1,4 @@
-
+﻿
 // import PoliciesProceduresUIDetailUI from "./PoliciesProceduresUIDetailUI";
 import { getPageData } from "@/services/APIServices";
 import { ResponseData } from "@/types/common";
@@ -19,7 +19,7 @@ export default async function Page({ params }: PageProps) {
     return;
   }
   
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   console.log("data",data);
 
   if (!data) {

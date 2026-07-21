@@ -1,4 +1,4 @@
-import { getPageData } from "@/services/APIServices";
+﻿import { getPageData } from "@/services/APIServices";
 import RatingUI from "./RatingUI";
 import { notFound } from "next/navigation";
 import { ResponseData } from "@/types/common";
@@ -17,7 +17,7 @@ export default async function Page() {
     return;
   }
   
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   
 
   if (!data) {

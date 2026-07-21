@@ -1,4 +1,4 @@
-
+﻿
 import PoliciesProceduresUIDetailUI from "./PoliciesProceduresUIDetailUI";
 import { getPageData } from "@/services/APIServices";
 import { ResponseData } from "@/types/common";
@@ -13,7 +13,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const resolvedParams = await params;
   const responseData = await getPageData('policies-and-procedures');
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   console.log("data",data);
 
   if (!data) {

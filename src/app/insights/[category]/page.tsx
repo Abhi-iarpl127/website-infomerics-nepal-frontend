@@ -1,4 +1,4 @@
-
+﻿
 import { getPageData } from "@/services/APIServices";
 import { ResponseData } from "@/types/common";
 import GenericUI from "./GenericUI";
@@ -14,7 +14,7 @@ export default async function Publication({ params }: PageProps) {
   const { category } = resolvedParams; // Access `slug` here after awaiting params
   console.log("category",category);
   const responseData = await getPageData(category);
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   console.log("data",data);
 
   if (!data) {

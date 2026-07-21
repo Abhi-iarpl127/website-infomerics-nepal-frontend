@@ -1,10 +1,10 @@
-import ArchiveNonReceiptOfNonDefaultStatementUI from "./ArchiveNonReceiptOfNonDefaultStatementUI";
+﻿import ArchiveNonReceiptOfNonDefaultStatementUI from "./ArchiveNonReceiptOfNonDefaultStatementUI";
 import { getPageData } from "@/services/APIServices";
 import { ResponseData } from "@/types/common";
 
 export default async function Publication() {
   const responseData = await getPageData('non-receipt-of-non-default-statement');
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   console.log("data",data);
 
   if (!data) {

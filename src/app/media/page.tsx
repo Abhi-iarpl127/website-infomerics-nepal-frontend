@@ -1,11 +1,11 @@
-
+﻿
 import PublicationUI from "./PublicationUI";
 import { getPageData } from "@/services/APIServices";
 import { ResponseData } from "@/types/common";
 
 export default async function Publication() {
   const responseData = await getPageData('media');
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   console.log("data",data);
 
   if (!data) {
