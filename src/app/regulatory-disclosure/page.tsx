@@ -17,7 +17,7 @@ export default async function RegulatoryDisclosureDetail() {
     return;
   }
   
-  const data: ResponseData = responseData.data;
+  const data: ResponseData = responseData?.data;
   
 
   if (!data) {
