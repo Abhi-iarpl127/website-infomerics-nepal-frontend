@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto+Slab:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    font-size: 16px;
+    --irWhite: #fff;
+    --irBlack: #000;
+    --irDefault: #231F20;
+    --irYellow: #ffae00;
+    --irBlue: #026EA7;
+    --irSeaBlue: #0094DA;
+    --irGrey: #F1F1F1;
+    --fontRoboto: 'Roboto', sans-serif, Arial, Helvetica;
+    --fontRobotoCondensed: 'Roboto Condensed', sans-serif, Arial, Helvetica;
+    --fontRobotoSlab: 'Roboto Slab', sans-serif, Arial, Helvetica;
+  }
