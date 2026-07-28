@@ -1,7 +1,8 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://infomerics-g.cwyde.com";
 
 async function fetchData(endpoint: string, customBaseUrl: string = "") {
-  const url = `${customBaseUrl || BASE_URL}/${endpoint}`;
+  const base = (customBaseUrl || BASE_URL).replace(/\/+$/, "");
+  const url = `${base}/${endpoint.replace(/^\/+/, "")}`;
   console.log(`Fetching from: ${url}`);
 
   try {

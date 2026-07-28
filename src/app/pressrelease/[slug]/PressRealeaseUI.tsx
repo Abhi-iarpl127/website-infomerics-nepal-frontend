@@ -63,7 +63,7 @@ export default function PressRealeaseUI({ slug }: { slug: string }) {
   const [pastInstruments, setPastInstruments] = useState<PastInstruments[]>([]);
 
 
-  // const [years, setYears] = useState<string[]>([]);
+  const [years, setYears] = useState<string[]>([]);
   const [year, setYear] = useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
@@ -81,9 +81,9 @@ export default function PressRealeaseUI({ slug }: { slug: string }) {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/press-releases/${slug}`
       );
       const data1 = await response1.json();
-      setPressReleaseList(data1.data as PressReleaseListData[]);
-      // setYears(data1.meta.years as string[]);
-      setYear(data1?.meta?.selectedYear as string || ""); 
+      setPressReleaseList((data1?.data as PressReleaseListData[]) || []);
+      setYears((data1?.meta?.years as string[]) || []);
+      setYear((data1?.meta?.selectedYear as string) || "");
       // console.log(data1,"PressReleaseListData");
     };
     fetchData();
@@ -112,7 +112,7 @@ export default function PressRealeaseUI({ slug }: { slug: string }) {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/press-releases/${slug}?year=${year}`
       );
       const data = await response.json();
-      setPressReleaseList(data.data as PressReleaseListData[]);
+      setPressReleaseList((data?.data as PressReleaseListData[]) || []);
     };
     fetchPressReleases();
   }, [year, slug]);
@@ -308,6 +308,71 @@ export default function PressRealeaseUI({ slug }: { slug: string }) {
           ) : (
             <div className="text-center">
               <p>No Past Ratings Rationale.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="section-ptb Press-Releases">
+        <div className="ir-container">
+          <div className="ir-heading d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <h2>Press Releases</h2>
+            {years.length > 0 && (
+              <select
+                className="form-select w-auto"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                aria-label="Filter press releases by year"
+              >
+                <option value="">All years</option>
+                {years.map((y) => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+          {pressReleaseList && pressReleaseList.length > 0 ? (
+            <div className="ir-table-secondary table-responsive table-prp">
+              <table className="table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Rationale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pressReleaseList.map((item, idx) => (
+                    <tr key={item.id ?? idx} className={`${idx % 2 === 0 ? 'bg1_press' : 'bg2_press'}`}>
+                      <td>
+                        <DateComponent date={item.Date} />
+                      </td>
+                      <td>
+                        <p className="title mb-0">{item.Title}</p>
+                      </td>
+                      <td>
+                        {item.Document?.DocumentFile?.url || item.Link ? (
+                          <a
+                            href={item.Document?.DocumentFile?.url || item.Link}
+                            target={item.Target || "_blank"}
+                            className="btn-download-press-relese for-download-subscription btn btn-sm d-flex align-items-center justify-content-center"
+                          >
+                            <img src="../images/download-icon.png" alt="Download" />
+                          </a>
+                        ) : (
+                          <span>-</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center">
+              <p>No Press Releases{year ? ` for ${year}` : ""}.</p>
             </div>
           )}
         </div>
