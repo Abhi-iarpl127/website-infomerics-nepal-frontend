@@ -1,7 +1,7 @@
 ﻿
 import PoliciesProceduresUIDetailUI from "./PoliciesProceduresUIDetailUI";
-import { getPageData } from "@/services/APIServices";
-import { ResponseData } from "@/types/common";
+import { getPageData, getPoliciesAndProceduresDetailData } from "@/services/APIServices";
+import { ResponseData, CorporateGovernanceData } from "@/types/common";
 
 interface PageProps {
   params: Promise<{
@@ -23,9 +23,31 @@ export default async function Page({ params }: PageProps) {
   return <PoliciesProceduresUIDetailUI slug={resolvedParams.slug || ""} title={data.PageTitle} description={data.Subtitle} image={data.PageBanner?.url} s_image={data.PageMobileBanner?.url} />;
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }: PageProps) {
+  const resolvedParams = await params;
+  const response = await getPoliciesAndProceduresDetailData(resolvedParams.slug || "");
+  const data = response?.data as CorporateGovernanceData | undefined;
+
+  if (!data) {
+    return {
+      title: "Publication",
+      description: "Publication",
+    };
+  }
+
+  const description = data.Description?.replace(/<[^>]*>/g, "").trim() || data.Title;
+
   return {
-    title: "Publication",
-    description: "Publication",
+    title: data.Title,
+    description,
+    openGraph: {
+      title: data.Title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data.Title,
+      description,
+    },
   };
 }

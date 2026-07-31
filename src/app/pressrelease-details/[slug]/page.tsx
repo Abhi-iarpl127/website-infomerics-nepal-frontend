@@ -4,6 +4,7 @@
 // import { ResponseData } from "@/types/common";
 // import { notFound } from "next/navigation";
 import PressRealeaseUI from "./PressRealeaseUI";
+import { PressReleaseData } from "@/types/common";
 interface PageProps {
   params: Promise<{
       slug: string;
@@ -18,7 +19,7 @@ export default async function Page({ params }: PageProps) {
   //   notFound();
   //   return;
   // }
-  
+
   // const data: ResponseData = responseData.data;
   // console.log("data",data);
 
@@ -29,9 +30,32 @@ export default async function Page({ params }: PageProps) {
   return <PressRealeaseUI slug={resolvedParams.slug}/>;
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/company-instruments/past-instruments/${slug}`);
+  const data = response.ok ? ((await response.json()) as PressReleaseData) : null;
+  const companyName = data?.company?.CompanyName;
+
+  if (!companyName) {
+    return {
+      title: "Publication",
+      description: "Publication",
+    };
+  }
+
+  const description = data?.company?.SubTitle?.replace(/<[^>]*>/g, "").trim() || `Past ratings rationale for ${companyName}`;
+
   return {
-    title: "Publication",
-    description: "Publication",
+    title: companyName,
+    description,
+    openGraph: {
+      title: companyName,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: companyName,
+      description,
+    },
   };
 }
