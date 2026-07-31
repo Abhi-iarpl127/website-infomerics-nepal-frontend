@@ -40,10 +40,7 @@ const ArticleUI = ({ slug }: ArticleUIProps) => {
                 <Link href="/">Home</Link>
               </li>
               <li className="breadcrumb-item">
-                <Link href="/publication">Publication</Link>
-              </li>
-              <li className="breadcrumb-item">
-                <Link href={`/publication/${articleData?.category.slug}`}>{articleData?.category.name}</Link>
+                <Link href={`/insights/${articleData?.category.slug}`}>{articleData?.category.name}</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 {articleData?.Title}
